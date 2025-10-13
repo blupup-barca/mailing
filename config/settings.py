@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-iacs#*-nut3+5g-33eb=g2wr*x%fy=t$o@4_y&-)j^_efk2_&w'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
     'messaging'
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -128,3 +128,29 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (BASE_DIR / 'static',)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = "messaging:mailing_list"
+LOGOUT_REDIRECT_URL = "messaging:mailing_list"
+LOGIN_URL = "users:login"
+
+EMAIL_BACKEND = os.getenv
+EMAIL_HOST = os.getenv
+EMAIL_PORT = os.getenv
+EMAIL_USE_TLS = os.getenv
+EMAIL_USE_SSL = os.getenv
+EMAIL_HOST_USER = os.getenv
+EMAIL_HOST_PASSWORD = os.getenv
+DEFAULT_FROM_EMAIL = os.getenv
+
+SERVER_EMAIL = EMAIL_HOST_USER
+
+CACHE_ENABLED = True
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv("LOCATION")
+        }
+    }
