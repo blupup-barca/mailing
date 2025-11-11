@@ -1,11 +1,8 @@
 from django.core.mail import send_mail
 from django.db import models
-from django.utils import timezone
-
-from config import settings
 from users.models import User
-
-
+from config import settings
+from django.utils import timezone
 class Client(models.Model):
     email = models.EmailField(verbose_name="Email")
     full_name = models.CharField(max_length=255, verbose_name="ФИО")
@@ -24,7 +21,6 @@ class Client(models.Model):
 
     def __str__(self):
         return self.full_name
-
 
 class Message(models.Model):
     subject = models.CharField(max_length=255, verbose_name="Тема письма")
@@ -140,7 +136,6 @@ class Mailing(models.Model):
 
     def __str__(self):
         return f"Рассылка {self.id} - {self.get_status_display()}"
-
 
 class Attempt(models.Model):
     SUCCESS = "success"

@@ -19,18 +19,6 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
-        permissions = [
-            ("can_block_user", "Может блокировать пользователей"),
-            ("can_view_all", "Может просматривать все объекты"),
-            ("can_finish_mailing", "Может завершать рассылки"),
-        ]
-
-    def __str__(self):
-        return self.email
-
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
